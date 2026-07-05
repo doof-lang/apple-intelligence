@@ -1,0 +1,11 @@
+{
+  "name": "apple-intelligence-basic-sample",
+  "version": "0.1.0",
+  "license": "ISC",
+  "entry": "main.do",
+  "dependencies": {
+    "std/apple-intelligence": {
+      "path": "../.."
+    }
+  }
+}

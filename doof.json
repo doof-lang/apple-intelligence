@@ -1,0 +1,29 @@
+{
+  "name": "std/apple-intelligence",
+  "version": "0.1.0",
+  "license": "ISC",
+  "build": {
+    "native": {
+      "extraCopyPaths": [
+        "apple_intelligence_bridge.hpp"
+      ],
+      "macos": {
+        "sourceFiles": [
+          "apple_intelligence_impl.swift"
+        ],
+        "frameworks": [
+          "Foundation",
+          "FoundationModels"
+        ]
+      }
+    }
+  },
+  "dependencies": {
+    "std/assert": {
+      "path": "../assert"
+    },
+    "std/json": {
+      "path": "../json"
+    }
+  }
+}
