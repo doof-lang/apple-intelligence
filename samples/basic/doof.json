@@ -4,8 +4,5 @@
   "license": "ISC",
   "entry": "main.do",
   "dependencies": {
-    "std/apple-intelligence": {
-      "path": "../.."
-    }
   }
 }
