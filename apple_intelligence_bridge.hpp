@@ -33,26 +33,26 @@ inline doof::Result<std::string, std::string> wrap_string_result(char* raw, char
     if (raw) {
         std::string value(raw);
         ai_free_string(raw);
-        return doof::Result<std::string, std::string>::success(std::move(value));
+        return doof::Success<std::string>{std::move(value)};
     }
 
     std::string message(error ? error : "unknown Apple Intelligence error");
     if (error) {
         ai_free_string(error);
     }
-    return doof::Result<std::string, std::string>::failure(std::move(message));
+    return doof::Failure<std::string>{std::move(message)};
 }
 
 inline doof::Result<void, std::string> wrap_void_result(int ok, char* error) {
     if (ok != 0) {
-        return doof::Result<void, std::string>::success();
+        return doof::Success<void>{};
     }
 
     std::string message(error ? error : "unknown Apple Intelligence error");
     if (error) {
         ai_free_string(error);
     }
-    return doof::Result<void, std::string>::failure(std::move(message));
+    return doof::Failure<std::string>{std::move(message)};
 }
 
 struct ToolCallback {
@@ -77,11 +77,11 @@ inline char* call_tool(void* context, const char* argsJson, char** outError) {
             callback->invoke,
             std::string(argsJson ? argsJson : "null")
         );
-        if (result.isSuccess()) {
-            return strdup(result.value().c_str());
+        if (doof::is_success(result)) {
+            return strdup(doof::success_value(result).c_str());
         }
         if (outError) {
-            *outError = strdup(result.error().c_str());
+            *outError = strdup(doof::failure_error(result).c_str());
         }
         return nullptr;
     } catch (const doof::Panic& e) {
@@ -126,7 +126,7 @@ public:
 
     doof::Result<std::string, std::string> respond(const std::string& prompt) const {
         if (!handle_) {
-            return doof::Result<std::string, std::string>::failure(initError_);
+            return doof::Failure<std::string>{initError_};
         }
         char* error = nullptr;
         char* result = ai_session_respond(handle_, prompt.c_str(), &error);
@@ -135,7 +135,7 @@ public:
 
     doof::Result<std::string, std::string> transcriptJson() const {
         if (!handle_) {
-            return doof::Result<std::string, std::string>::failure(initError_);
+            return doof::Failure<std::string>{initError_};
         }
         char* error = nullptr;
         char* result = ai_session_transcript_json(handle_, &error);
@@ -149,7 +149,7 @@ public:
         doof::callback<doof::Result<std::string, std::string>(std::string)> invoke
     ) {
         if (!handle_) {
-            return doof::Result<void, std::string>::failure(initError_);
+            return doof::Failure<std::string>{initError_};
         }
 
         auto callback = std::make_unique<apple_intelligence_detail::ToolCallback>(std::move(invoke));
@@ -165,7 +165,7 @@ public:
         );
 
         auto result = apple_intelligence_detail::wrap_void_result(ok, error);
-        if (result.isSuccess()) {
+        if (doof::is_success(result)) {
             callbacks_.push_back(std::move(callback));
         }
         return result;
