@@ -7,7 +7,7 @@ export import class NativeAppleIntelligenceSession from "./apple_intelligence_br
     description: string,
     inputSchemaJson: string,
     invoke: (argsJson: string): Result<string, string>,
-  ): Result<void, string>
+  ): Result<none, string>
 }
 
 export import function createNativeAppleIntelligenceSession(instructions: string): NativeAppleIntelligenceSession

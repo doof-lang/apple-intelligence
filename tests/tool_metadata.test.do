@@ -18,7 +18,7 @@ class SampleTools "Tools used to validate Apple Intelligence metadata registrati
   }
 }
 
-export function testToolMetadataSchemaAndInvoke(): void {
+export function testToolMetadataSchemaAndInvoke(): none {
   meta := SampleTools.metadata
   Assert.equal(meta.name, "SampleTools")
   Assert.equal(meta.methods.length, 1)
@@ -29,5 +29,5 @@ export function testToolMetadataSchemaAndInvoke(): void {
 
   result := method.invoke(SampleTools { }, { label: "Words", text: "alpha beta" })
   Assert.isTrue(result.isSuccess())
-  Assert.equal(formatJsonValue(result.unwrapOr(null)), "{\"label\":\"Words\",\"count\":2}")
+  Assert.equal(formatJsonValue(result.unwrapOr(none)), "{\"label\":\"Words\",\"count\":2}")
 }

@@ -28,7 +28,7 @@ export class AppleIntelligenceSession {
     description: string,
     inputSchema: JsonValue,
     invoke: (args: JsonValue): Result<JsonValue, JsonValue>,
-  ): Result<void, string> {
+  ): Result<none, string> {
     return native.addTool(
       name,
       description,
@@ -43,7 +43,7 @@ export class AppleIntelligenceSession {
     )
   }
 
-  addTools<T: Reflectable>(tools: T): Result<void, string> {
+  addTools<T: Reflectable>(tools: T): Result<none, string> {
     meta := T.metadata
     for method of meta.methods {
       try! addTool(
