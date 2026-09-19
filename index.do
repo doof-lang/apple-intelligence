@@ -18,7 +18,7 @@ export class AppleIntelligenceSession {
     return native.transcriptJson()
   }
 
-  transcriptJson(): Result<JsonValue, string> {
+  transcriptJson(): Result<SerialValue, string> {
     try text := native.transcriptJson()
     return parseJsonValue(text)
   }
@@ -26,8 +26,8 @@ export class AppleIntelligenceSession {
   addTool(
     name: string,
     description: string,
-    inputSchema: JsonValue,
-    invoke: (args: JsonValue): Result<JsonValue, JsonValue>,
+    inputSchema: SerialValue,
+    invoke: (args: SerialValue): Result<SerialValue, SerialValue>,
   ): Result<none, string> {
     return native.addTool(
       name,
@@ -50,7 +50,7 @@ export class AppleIntelligenceSession {
         method.name,
         method.description,
         method.inputSchema,
-        (args: JsonValue): Result<JsonValue, JsonValue> => method.invoke(tools, args),
+        (args: SerialValue): Result<SerialValue, SerialValue> => method.invoke(tools, args),
       )
     }
     return Success()
