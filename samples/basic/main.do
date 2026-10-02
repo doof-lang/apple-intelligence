@@ -24,7 +24,7 @@ function main(): int {
     "You are a creative writing assistant. Write naturally and use tools when they help.",
   )
   tools := WritingTools { }
-  try! session.addTools(tools)
+  session.addTools(tools)!
 
   case session.respond("Write exactly two short sentences about a robot learning to bake sourdough.") {
     s: Success -> println(s.value)

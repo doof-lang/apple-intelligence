@@ -46,12 +46,12 @@ export class AppleIntelligenceSession {
   addTools<T: Reflectable>(tools: T): Result<none, string> {
     meta := T.metadata
     for method of meta.methods {
-      try! addTool(
+      addTool(
         method.name,
         method.description,
         method.inputSchema,
         (args: SerialValue): Result<SerialValue, SerialValue> => method.invoke(tools, args),
-      )
+      )!
     }
     return Success()
   }
