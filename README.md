@@ -22,8 +22,8 @@ session := AppleIntelligenceSession(
   "You are a concise assistant. Answer naturally.",
 )
 
-answer := try! session.respond("Explain sourdough starter in two sentences.")
-followUp := try! session.respond("Now make that explanation friendlier.")
+answer := session.respond("Explain sourdough starter in two sentences.")!
+followUp := session.respond("Now make that explanation friendlier.")!
 ```
 
 ## Tool usage
@@ -40,7 +40,7 @@ class PantryTools "Kitchen helpers." {
 
 session := AppleIntelligenceSession("Use pantry tools when they help.")
 tools := PantryTools { }
-try! session.addTools(tools)
+session.addTools(tools)!
 ```
 
 See `samples/basic` for a complete executable sample.
