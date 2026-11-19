@@ -15,7 +15,7 @@ class WritingTools "Small deterministic helpers available to the writing assista
     label "The note label.": string,
     text "The note body.": string,
   ): string {
-    return label.trim() + ": " + text.trim()
+    return "${label.trim()}: ${text.trim()}"
   }
 }
 
@@ -29,7 +29,7 @@ function main(): int {
   case session.respond("Write exactly two short sentences about a robot learning to bake sourdough.") {
     s: Success -> println(s.value)
     f: Failure -> {
-      println("Apple Intelligence unavailable: " + f.error)
+      println("Apple Intelligence unavailable: ${f.error}")
       return 1
     }
   }
@@ -39,7 +39,7 @@ function main(): int {
   case session.respond("In one sentence, refer to that robot and use a tool to label the note as Summary.") {
     s: Success -> println(s.value)
     f: Failure -> {
-      println("Apple Intelligence follow-up failed: " + f.error)
+      println("Apple Intelligence follow-up failed: ${f.error}")
       return 1
     }
   }
